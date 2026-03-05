@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Programs – Trinity Polytechnic College Marilao</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <!-- ✅ Shared site styles (navbar, footer, base, etc.) -->
+  <link rel="stylesheet" href="../src/main.css"/>
+
+  <!-- ══ PAGE-SPECIFIC STYLES ONLY ══ -->
+  <style>
+
+    /* ══ HERO — SPLIT LAYOUT ══ */
+    .hero {
+      margin-top: 56px;
+      min-height: clamp(460px, 52vw, 640px);
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Left: dark navy text panel with angled right edge */
+    .hero-left {
+      position: relative; z-index: 3;
+      flex: 0 0 clamp(320px, 46%, 600px);
+      background: var(--dark);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: clamp(48px, 5vw, 80px) clamp(28px, 4vw, 60px);
+      clip-path: polygon(0 0, 100% 0, calc(100% - 56px) 100%, 0 100%);
+    }
+    .hero-left::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(235,174,0,.13) 1px, transparent 1px);
+      background-size: 26px 26px; pointer-events: none;
+    }
+    .hero-left::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background: var(--gold);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; padding: 4px 12px; text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .hero-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(34px, 5vw, 68px); font-weight: 700;
+      color: white; text-transform: uppercase; line-height: .93;
+      letter-spacing: 1px; margin-bottom: 18px;
+    }
+    .hero-title .gold { color: var(--gold); display: block; }
+    .hero-desc {
+      color: rgba(255,255,255,.68); font-size: 14px; line-height: 1.8;
+      max-width: 400px; margin-bottom: 26px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 13px 26px;
+      text-decoration: none; transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: white; transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid rgba(255,255,255,.28); color: rgba(255,255,255,.8);
+      font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; padding: 13px 26px;
+      text-decoration: none; transition: border-color .2s, color .2s, background .2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); background: rgba(235,174,0,.08); }
+
+    .hero-stats {
+      display: flex; gap: clamp(16px, 3vw, 36px);
+      margin-top: 30px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.12); flex-wrap: wrap;
+    }
+    .hero-stat-num {
+      font-family: 'Oswald', sans-serif; font-size: clamp(24px, 3.2vw, 36px);
+      font-weight: 700; color: var(--gold); line-height: 1;
+    }
+    .hero-stat-label { font-size: 11px; color: rgba(255,255,255,.45); letter-spacing: .5px; margin-top: 3px; }
+
+    /* Right: full-bleed banner photo panel */
+    .hero-right {
+      flex: 1; position: relative; overflow: hidden;
+    }
+    .hero-right img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: left center;
+      filter: brightness(.9) saturate(.95);
+      transition: transform 10s ease;
+    }
+    .hero-right:hover img { transform: scale(1.04); }
+    /* left-edge feather blending into dark panel */
+    .hero-right::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 140px; z-index: 2;
+      background: linear-gradient(to right, var(--dark) 0%, transparent 100%);
+    }
+    /* bottom gold stripe */
+    .hero-right::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 5px;
+      background: var(--gold); z-index: 3;
+    }
+
+    /* Floating cash-allowance badge */
+    .hero-badge {
+      position: absolute; bottom: 36px; right: 32px; z-index: 4;
+      background: var(--gold); padding: 16px 22px; text-align: center;
+      box-shadow: 0 10px 36px rgba(0,0,0,.35);
+      animation: badge-float 3.2s ease-in-out infinite;
+    }
+    @keyframes badge-float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-7px); }
+    }
+    .hero-badge-top {
+      font-family: 'Oswald', sans-serif; font-size: 9px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(30,38,96,.65);
+    }
+    .hero-badge-num {
+      font-family: 'Oswald', sans-serif; font-size: 40px; font-weight: 700;
+      color: var(--dark); line-height: 1; margin: 2px 0;
+    }
+    .hero-badge-num sup { font-size: 18px; vertical-align: super; }
+    .hero-badge-bot {
+      font-family: 'Oswald', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; color: var(--dark);
+    }
+
+    @media (max-width: 680px) {
+      .hero { flex-direction: column; }
+      .hero-left { flex: none; clip-path: none; padding: 40px 20px 36px; }
+      .hero-left::after { display: none; }
+      .hero-right { height: 260px; flex: none; }
+      .hero-right::before { display: none; }
+      .hero-badge { bottom: 14px; right: 14px; padding: 10px 14px; }
+      .hero-badge-num { font-size: 28px; }
+    }
+
+    /* ══ PAGE SECTIONS ══ */
+    .page-section { padding: clamp(48px, 6vw, 80px) clamp(20px, 4vw, 48px); }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold2);
+      margin-bottom: 10px;
+    }
+    .section-label::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--gold); }
+    .section-heading {
+      font-family: 'Oswald', sans-serif; font-size: clamp(28px, 4vw, 48px);
+      color: var(--navy); font-weight: 700; letter-spacing: .5px; margin: 0;
+    }
+    .section-heading span { color: var(--gold2); }
+    .section-sub { color: #6b7280; font-size: 14.5px; margin-top: 10px; line-height: 1.8; max-width: 680px; }
+    .gold-bar { width: 52px; height: 4px; background: var(--gold); margin: 12px 0 32px; }
+
+    /* ══ TRACK FILTER ══ */
+    .track-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+    .track-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 18px; font-family: 'Oswald', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer;
+      border: 2px solid #e5e7eb; color: #6b7280; background: white;
+      transition: all .2s;
+    }
+    .track-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .track-btn.active { border-color: var(--navy); background: var(--navy); color: white; }
+    .track-btn.active .track-dot { background: var(--gold); }
+    .track-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+    /* ══ STRAND CARDS ══ */
+    .strands-grid {
+      display: grid; gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    }
+    @media (min-width: 1100px) { .strands-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 700px) and (max-width: 1099px) { .strands-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .strand-card {
+      position: relative; overflow: hidden; background: var(--dark);
+      display: flex; flex-direction: column; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(30,38,96,.18);
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .55s ease, transform .55s ease, box-shadow .3s ease;
+    }
+    .strand-card.visible { opacity: 1; transform: translateY(0); }
+    .strand-card:hover { transform: translateY(-6px) !important; box-shadow: 0 20px 48px rgba(30,38,96,.30); }
+
+    /*
+      KEY FIX: aspect-ratio keeps the container size stable at every viewport width.
+      No more jumping/zooming as you resize — the box is always 3:4 proportionally.
+      The img is absolute-positioned inside so object-position is reliable.
+    */
+    .strand-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      position: relative;
+      overflow: hidden;
+    }
+    .strand-card-img img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      /* object-position is set per-card via inline style on the <img> */
+      transition: transform .65s ease, filter .4s ease;
+      filter: brightness(.88) saturate(.9);
+    }
+    .strand-card:hover .strand-card-img img {
+      transform: scale(1.06);
+      filter: brightness(1) saturate(1.05);
+    }
+    /* gradient: top stays clear (student face), bottom darkens (text readable) */
+    .strand-card-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        transparent 38%,
+        rgba(30,38,96,.55) 65%,
+        rgba(30,38,96,.97) 100%
+      );
+      pointer-events: none;
+    }
+
+    .strand-abbr {
+      position: absolute; top: 14px; left: 16px; z-index: 2;
+      font-family: 'Oswald', sans-serif; font-size: 34px; font-weight: 700;
+      color: white; text-shadow: 0 2px 14px rgba(0,0,0,.5);
+      letter-spacing: 1px; line-height: 1;
+    }
+    .strand-track-badge {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Oswald', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 9px;
+    }
+    .strand-img-name {
+      position: absolute; bottom: 14px; left: 16px; right: 16px; z-index: 2;
+      font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 600;
+      color: rgba(255,255,255,.9); letter-spacing: .5px; line-height: 1.25;
+    }
+
+    .strand-card-body {
+      padding: 20px 22px 24px; flex: 1; display: flex; flex-direction: column; gap: 14px;
+    }
+    .strand-card-desc { font-size: 13px; color: rgba(255,255,255,.65); line-height: 1.7; }
+    .strand-careers { display: flex; flex-wrap: wrap; gap: 6px; }
+    .career-tag {
+      font-family: 'Oswald', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: .8px; padding: 4px 10px; text-transform: uppercase;
+      background: rgba(235,174,0,.1); border: 1px solid rgba(235,174,0,.22);
+      color: rgba(235,174,0,.88);
+    }
+    .strand-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .strand-enroll-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      transition: gap .2s, color .2s;
+    }
+    .strand-enroll-link:hover { gap: 12px; color: white; }
+    .strand-slots { font-size: 11px; color: rgba(255,255,255,.35); font-family: 'Oswald', sans-serif; }
+
+    /* ══ FREEBIES BAND ══ */
+    .freebies-band {
+      background: linear-gradient(135deg, #161d4f 0%, #2a347e 60%, #374399 100%);
+      padding: clamp(48px, 5vw, 72px) clamp(20px, 4vw, 48px);
+      position: relative; overflow: hidden;
+    }
+    .freebies-band::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(235,174,0,.09) 1px, transparent 1px);
+      background-size: 24px 24px; pointer-events: none;
+    }
+    .freebies-inner {
+      position: relative; z-index: 1; display: grid; gap: 48px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 900px) { .freebies-inner { grid-template-columns: 1fr 1fr; align-items: center; } }
+
+    .freebies-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--gold); color: var(--dark);
+      font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; padding: 4px 12px; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .freebies-title {
+      font-family: 'Oswald', sans-serif; font-size: clamp(30px, 4.5vw, 54px); font-weight: 700;
+      color: white; line-height: 1; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .freebies-title span { color: var(--gold); }
+    .freebies-desc { color: rgba(255,255,255,.62); font-size: 14px; line-height: 1.8; }
+
+    .cash-callout {
+      margin-top: 24px; display: inline-flex; align-items: center;
+      gap: 14px; background: var(--gold); padding: 14px 22px;
+    }
+    .cash-callout-icon { font-size: 24px; }
+    .cash-callout-text p {
+      font-family: 'Oswald', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase; color: rgba(30,38,96,.65); margin: 0;
+    }
+    .cash-callout-text strong {
+      font-family: 'Oswald', sans-serif; font-size: 30px; font-weight: 700;
+      color: var(--dark); line-height: 1;
+    }
+    .freebies-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .freebie-item {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+      padding: 13px 14px; transition: background .2s, border-color .2s;
+    }
+    .freebie-item:hover { background: rgba(235,174,0,.09); border-color: rgba(235,174,0,.22); }
+    .freebie-check {
+      width: 22px; height: 22px; flex-shrink: 0;
+      background: rgba(235,174,0,.12); border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .freebie-check i[data-lucide] { color: var(--gold); }
+    .freebie-label {
+      font-family: 'Oswald', sans-serif; font-size: 12px; font-weight: 500;
+      letter-spacing: .8px; text-transform: uppercase; color: rgba(255,255,255,.8);
+    }
+
+    /* ══ WHY TPC ══ */
+    .why-section { background: white; }
+    .why-grid {
+      display: grid; gap: 20px; margin-top: 32px;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    }
+    .why-card {
+      padding: 28px 22px; border: 2px solid #f3f4f6;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .45s ease, transform .45s ease, border-color .25s, box-shadow .25s;
+    }
+    .why-card.visible { opacity: 1; transform: translateY(0); }
+    .why-card:hover { border-color: var(--gold); transform: translateY(-4px) !important; box-shadow: 0 8px 28px rgba(42,52,126,.1); }
+    .why-icon {
+      width: 48px; height: 48px;
+      background: rgba(42,52,126,.07); border: 2px solid rgba(42,52,126,.1);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+    }
+    .why-icon i[data-lucide] { color: var(--navy); }
+    .why-card-title { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .why-card-text { font-size: 13px; color: #6b7280; line-height: 1.65; }
+
+    /* ══ CTA BAND ══ */
+    .cta-section {
+      background: var(--gold);
+      padding: clamp(40px, 5vw, 64px) clamp(20px, 4vw, 48px);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .cta-label {
+      font-family: 'Oswald', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; color: rgba(30,38,96,.55); margin-bottom: 6px;
+    }
+    .cta-title { font-family: 'Oswald', sans-serif; font-size: clamp(22px, 3.5vw, 38px); font-weight: 700; color: var(--dark); line-height: 1.1; }
+    .cta-contact { font-size: 13px; color: rgba(30,38,96,.62); margin-top: 8px; }
+    .cta-contact strong { color: var(--dark); }
+    .cta-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .cta-btn-dark {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--dark); color: white;
+      font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 28px;
+      text-decoration: none; transition: background .2s, transform .15s;
+    }
+    .cta-btn-dark:hover { background: #111830; transform: translateY(-2px); }
+    .cta-btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid var(--dark); color: var(--dark);
+      font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 28px;
+      text-decoration: none; transition: background .2s, color .2s;
+    }
+    .cta-btn-outline:hover { background: var(--dark); color: white; }
+
+  </style>
+</head>
+<body>
+
+  <div id="progress-bar"></div>
+
+  <!-- ════ TOPBAR ════ -->
+  <nav id="navbar">
+    <a href="../index.html" class="nav-brand">
+      <img src="../img/logo.png" alt="Trinity Polytechnic College Logo"/>
+      <div class="nav-brand-words">
+        <p><span>Trinity</span> Polytechnic College — <span>Marilao Campus</span></p>
+      </div>
+    </a>
+  </nav>
+
+  <!-- ════ MAIN NAV ════ -->
+  <nav class="main-nav" aria-label="Site navigation">
+    <div class="main-nav-inner">
+      <div class="nav-tab-group">
+        <button class="nav-tab active">
+          <i data-lucide="book-open" class="icon-sm"></i>
+          Home
+        </button>
+      </div>
+      <div class="nav-tab-group">
+        <button class="nav-tab">
+          <i data-lucide="globe" class="icon-sm"></i>
+          About Us
+        </button>
+
+      </div>
+      <a href="contact.html" class="nav-tab">
+        <i data-lucide="mail" class="icon-sm"></i>
+        Contact Us
+      </a>
+    </div>
+  </nav>
+
+  <!-- ════ HERO — SPLIT BANNER ════ -->
+  <section class="hero">
+    <!-- LEFT TEXT PANEL -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <i data-lucide="award" class="icon-sm"></i>
+        Senior High School Programs
+      </div>
+      <h1 class="hero-title">
+        Choose Your
+        <span class="gold">Strand.</span>
+        Shape Your Future.
+      </h1>
+      <p class="hero-desc">
+        TPC offers five Senior High School strands — each designed to launch your career, develop your skills, and ignite your potential.
+      </p>
+      <div class="hero-btns">
+        <a href="#strands" class="btn-primary">
+          <i data-lucide="compass" class="icon-sm"></i>
+          Explore Strands
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">5</div>
+          <div class="hero-stat-label">Strand Offerings</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">₱2K</div>
+          <div class="hero-stat-label">Cash Allowance</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">FREE</div>
+          <div class="hero-stat-label">Tuition &amp; Uniform</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2026</div>
+          <div class="hero-stat-label">Open Enrollment</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT BANNER PHOTO — students are on the left side of the wide image -->
+    <div class="hero-right">
+      <img src="../img/banner.png" alt="TPC Senior High School Students" style="object-position: left center;"/>
+      <div class="hero-badge">
+        <div class="hero-badge-top">Cash Allowance</div>
+        <div class="hero-badge-num"><sup>₱</sup>2,000</div>
+        <div class="hero-badge-bot">Per Enrollee</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════ STRAND CARDS ════ -->
+  <section class="page-section" id="strands" style="background:#f8f9fc;">
+    <div class="section-label">Senior High School</div>
+    <h2 class="section-heading">Our <span>Programs</span></h2>
+    <div class="gold-bar"></div>
+    <p class="section-sub">Whether you're drawn to technology, the arts, business, or hands-on skills — TPC has a strand crafted for your passion and career goals.</p>
+
+    <div class="track-filter" id="trackFilter">
+      <button class="track-btn active" data-track="all"><span class="track-dot"></span> All Strands</button>
+      <button class="track-btn" data-track="academic"><span class="track-dot"></span> Academic Track</button>
+      <button class="track-btn" data-track="tvl"><span class="track-dot"></span> TVL Track</button>
+    </div>
+
+    <div class="strands-grid" id="strandsGrid">
+
+      <!-- GAS — student is right side of poster ~80% x, face starts ~22% y -->
+      <div class="strand-card" data-track="academic">
+        <div class="strand-card-img">
+          <img src="../img/strand/gas.jpg" alt="GAS" style="object-position: 80% 22%;"/>
+          <span class="strand-abbr">GAS</span>
+          <span class="strand-track-badge">Academic</span>
+          <div class="strand-img-name">General Academic Strand</div>
+        </div>
+        <div class="strand-card-body">
+          <p class="strand-card-desc">The most flexible strand — GAS prepares you for almost any college course, broadening knowledge across sciences, humanities, and social sciences.</p>
+          <div class="strand-careers">
+            <span class="career-tag">Education</span>
+            <span class="career-tag">Liberal Arts</span>
+            <span class="career-tag">Social Work</span>
+            <span class="career-tag">Psychology</span>
+            <span class="career-tag">Political Science</span>
+          </div>
+          <div class="strand-card-footer">
+            <a href="#" class="strand-enroll-link">Enroll in GAS <i data-lucide="arrow-right" class="icon-sm"></i></a>
+            <span class="strand-slots">Slots Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HUMSS -->
+      <div class="strand-card" data-track="academic">
+        <div class="strand-card-img">
+          <img src="../img/strand/humms.jpg" alt="HUMSS" style="object-position: 78% 20%;"/>
+          <span class="strand-abbr">HUMSS</span>
+          <span class="strand-track-badge">Academic</span>
+          <div class="strand-img-name">Humanities &amp; Social Sciences</div>
+        </div>
+        <div class="strand-card-body">
+          <p class="strand-card-desc">For future communicators, educators, lawyers, and social advocates. HUMSS sharpens your understanding of society, culture, and human behavior.</p>
+          <div class="strand-careers">
+            <span class="career-tag">Law</span>
+            <span class="career-tag">Journalism</span>
+            <span class="career-tag">Teaching</span>
+            <span class="career-tag">Diplomacy</span>
+            <span class="career-tag">Sociology</span>
+          </div>
+          <div class="strand-card-footer">
+            <a href="#" class="strand-enroll-link">Enroll in HUMSS <i data-lucide="arrow-right" class="icon-sm"></i></a>
+            <span class="strand-slots">Slots Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABM -->
+      <div class="strand-card" data-track="academic">
+        <div class="strand-card-img">
+          <img src="../img/strand/abm.jpg" alt="ABM" style="object-position: 80% 22%;"/>
+          <span class="strand-abbr">ABM</span>
+          <span class="strand-track-badge">Academic</span>
+          <div class="strand-img-name">Accountancy, Business &amp; Management</div>
+        </div>
+        <div class="strand-card-body">
+          <p class="strand-card-desc">Built for future entrepreneurs and business leaders. ABM equips you with core knowledge in business management, economics, and financial literacy.</p>
+          <div class="strand-careers">
+            <span class="career-tag">Accounting</span>
+            <span class="career-tag">Entrepreneurship</span>
+            <span class="career-tag">Finance</span>
+            <span class="career-tag">Management</span>
+            <span class="career-tag">Marketing</span>
+          </div>
+          <div class="strand-card-footer">
+            <a href="#" class="strand-enroll-link">Enroll in ABM <i data-lucide="arrow-right" class="icon-sm"></i></a>
+            <span class="strand-slots">Slots Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICT -->
+      <div class="strand-card" data-track="tvl">
+        <div class="strand-card-img">
+          <img src="../img/strand/ict.jpg" alt="ICT" style="object-position: 75% 18%;"/>
+          <span class="strand-abbr">ICT</span>
+          <span class="strand-track-badge">TVL Track</span>
+          <div class="strand-img-name">Information &amp; Communication Technology</div>
+        </div>
+        <div class="strand-card-body">
+          <p class="strand-card-desc">For digital creators, programmers, and tech innovators. ICT provides hands-on training in computer systems, web development, and digital tools.</p>
+          <div class="strand-careers">
+            <span class="career-tag">Programming</span>
+            <span class="career-tag">Web Design</span>
+            <span class="career-tag">Networking</span>
+            <span class="career-tag">IT Support</span>
+            <span class="career-tag">Cybersecurity</span>
+          </div>
+          <div class="strand-card-footer">
+            <a href="#" class="strand-enroll-link">Enroll in ICT <i data-lucide="arrow-right" class="icon-sm"></i></a>
+            <span class="strand-slots">Slots Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- H.E -->
+      <div class="strand-card" data-track="tvl">
+        <div class="strand-card-img">
+          <img src="../img/strand/he.jpg" alt="H.E" style="object-position: 78% 20%;"/>
+          <span class="strand-abbr">H.E</span>
+          <span class="strand-track-badge">TVL Track</span>
+          <div class="strand-img-name">Home Economics</div>
+        </div>
+        <div class="strand-card-body">
+          <p class="strand-card-desc">A skills-based strand for future chefs and hospitality professionals. HE combines expertise in food technology, cookery, and household management.</p>
+          <div class="strand-careers">
+            <span class="career-tag">Culinary Arts</span>
+            <span class="career-tag">Hospitality</span>
+            <span class="career-tag">Nutrition</span>
+            <span class="career-tag">Food Tech</span>
+            <span class="career-tag">Tourism</span>
+          </div>
+          <div class="strand-card-footer">
+            <a href="#" class="strand-enroll-link">Enroll in H.E <i data-lucide="arrow-right" class="icon-sm"></i></a>
+            <span class="strand-slots">Slots Available</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════ FREEBIES ════ -->
+  <section class="freebies-band">
+    <div class="freebies-inner">
+      <div>
+        <div class="freebies-eyebrow">
+          <i data-lucide="gift" class="icon-sm"></i>
+          Enrollment Perks
+        </div>
+        <h2 class="freebies-title">All These<br/><span>For FREE.</span></h2>
+        <p class="freebies-desc">At TPC, every enrolled student gets a full package of benefits — because no financial barrier should stand between you and quality education.</p>
+        <div class="cash-callout">
+          <span class="cash-callout-icon">📣</span>
+          <div class="cash-callout-text">
+            <p>Plus a cash allowance of</p>
+            <strong>₱2,000.00</strong>
+          </div>
+        </div>
+      </div>
+      <div class="freebies-grid">
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">Tuition Fee</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">Miscellaneous Fee</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">School Uniform</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">P.E Uniform</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">I.D Card</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">I.D Lace</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">Modules</span></div>
+        <div class="freebie-item"><div class="freebie-check"><i data-lucide="check" class="icon-xs"></i></div><span class="freebie-label">Worksheets</span></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ CTA ════ -->
+  <section class="cta-section">
+    <div>
+      <div class="cta-label">Limited Slots Only</div>
+      <h2 class="cta-title">Ready to Start Your Journey at TPC?</h2>
+      <p class="cta-contact">Call: <strong>0919-8934-789</strong> &nbsp;·&nbsp; Email: <strong>trinitymarilao.marketing@gmail.com</strong></p>
+    </div>
+    <div class="cta-btns">
+      <a href="admissions.html" class="cta-btn-dark"><i data-lucide="log-in" class="icon-sm"></i>Enroll Now</a>
+      <a href="contact.html" class="cta-btn-outline"><i data-lucide="phone" class="icon-sm"></i>Contact Us</a>
+    </div>
+  </section>
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="footer-redesign">
+    <div class="footer-dots"></div>
+    <div class="footer-cta-band">
+
+    </div>
+    <div class="footer-body">
+      <div class="footer-brand-col">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+          <img src="../img/logo.png" alt="TPC Logo" style="height:50px;width:auto;object-fit:contain;"/>
+          <div>
+            <p style="font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;color:white;margin:0;line-height:1.2;">Trinity Polytechnic College</p>
+            <p style="font-family:'Oswald',sans-serif;font-size:13px;font-weight:500;color:var(--gold);margin:0;">Marilao Campus</p>
+          </div>
+        </div>
+        <p class="tagline">Ibayo, Marilao, Bulacan — a DepEd-recognized school committed to quality, affordable education for every Filipino student.</p>
+        <br>
+        <a href="https://www.facebook.com/p/Trinity-Polytechnic-College-Marilao-Campus-61564842752456/" target="_blank" rel="noreferrer" class="footer-fb">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>
+          Follow us on Facebook
+        </a>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Access</h4>
+        <a href="admissions.html"><i data-lucide="log-in" class="icon-sm"></i>Enrollment / Admissions</a>
+        <a href="programs.html"><i data-lucide="book-open" class="icon-sm"></i>View Programs</a>
+        <a href="scholarships.html"><i data-lucide="star" class="icon-sm"></i>Scholarships &amp; Freebies</a>
+        <a href="request-docs.html"><i data-lucide="file-text" class="icon-sm"></i>Request Documents</a>
+        <a href="announcements.html"><i data-lucide="megaphone" class="icon-sm"></i>Announcements</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <div class="contact-item">
+          <i data-lucide="map-pin" class="icon-sm"></i>
+          <p>Goldstar Building, #9038 De Castro Compound, McArthur Highway, Ibayo, Marilao, Bulacan</p>
+        </div>
+        <div class="contact-item">
+          <i data-lucide="phone" class="icon-sm"></i>
+          <a href="tel:+639198934789">0919-8934-789</a>
+        </div>
+        <div class="contact-item">
+          <i data-lucide="mail" class="icon-sm"></i>
+          <a href="mailto:trinitymarilao.marketing@gmail.com">trinitymarilao.marketing@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <p>© 2026 Trinity Polytechnic College — Marilao Campus. All Rights Reserved.</p>
+      <div style="display:flex;gap:16px;">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <button id="back-top" aria-label="Back to top">
+    <i data-lucide="arrow-up" class="icon-md"></i>
+  </button>
+
+  <script>
+    lucide.createIcons();
+
+    const pb = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      pb.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    }, { passive: true });
+
+    const btt = document.getElementById('back-top');
+    window.addEventListener('scroll', () => btt.classList.toggle('visible', window.scrollY > 300), { passive: true });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Track filter
+    document.querySelectorAll('.track-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.track-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const track = btn.dataset.track;
+        document.querySelectorAll('.strand-card').forEach(card => {
+          card.style.display = (track === 'all' || card.dataset.track === track) ? 'flex' : 'none';
+        });
+      });
+    });
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(entry.target.parentElement.children).indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('visible'), idx * 90);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.strand-card, .why-card').forEach(c => io.observe(c));
+  </script>
+</body>
+</html>
